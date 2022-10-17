@@ -1,43 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsg_first_project/Screens/contestsViewWidget.dart';
-import 'package:gsg_first_project/dataSets/contestList.dart';
-import 'package:gsg_first_project/main.dart';
 import 'package:gsg_first_project/mixins.dart';
 
-class YourScreen extends StatefulWidget {
-  @override
-  State<YourScreen> createState() => _YourScreenState();
-}
-
-class _YourScreenState extends State<YourScreen> {
+class ReadMore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    int s = mix.score;
-    String msg = '';
-    if (s == 0) {
-      msg = 'ZERROOOOOO, try again.';
-    } else if (s == 1) {
-      msg = 'You got an almost bad result, try again.';
-    } else if (s == 2) {
-      msg = 'not very bad,but try again.';
-    } else if (s == 3) {
-      msg = 'good, but try again.';
-    } else if (s == 4) {
-      msg = 'Your result is good.';
-    } else if (s == 5) {
-      msg = 'Great, you got full mark.';
-    }
+    String d = mix.desc;
     return Theme(
       data: mix.themeData,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('The Result'),
+          title: const Text('Description'),
           centerTitle: true,
         ),
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
+              fit: BoxFit.cover,
               image: AssetImage('images/stars.webp'),
             ),
           ),
@@ -73,28 +52,13 @@ class _YourScreenState extends State<YourScreen> {
                           Radius.circular(30),
                         ),
                       ),
-                      child: Text('Your Score is : $s of 50'),
+                      child: Text(
+                        d,
+                        style: const TextStyle(fontSize: 18, height: 2),
+                      ),
                     ),
                   ),
                 ],
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  onPressed: () {
-                    mix.qNum = 1;
-                    mix.score = 0;
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyApp(),
-                      ),
-                    );
-                  },
-                  child: const Icon(Icons.home),
-                ),
               ),
             ],
           ),

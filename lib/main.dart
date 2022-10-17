@@ -33,48 +33,106 @@ class _MainScreenOfApp extends State<MainScreenOfApp> {
   ThemeData themeData = ThemeData.dark();
   Icon icn = const Icon(Icons.light_mode);
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
     return Theme(
       data: mix.themeData,
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Expanded(
-                    child: Text('أراجيز', textAlign: TextAlign.center)),
-                IconButton(
-                  icon: icn,
-                  onPressed: () {
-                    return setState(
-                      () {
-                        if (mix.themeMode == ThemeMode.dark) {
-                          mix.themeMode = ThemeMode.light;
-                          mix.themeData = ThemeData.light();
-                          icn = const Icon(Icons.dark_mode);
-                        } else {
-                          mix.themeMode = ThemeMode.dark;
-                          mix.themeData = ThemeData.dark();
-                          icn = const Icon(Icons.light_mode);
-                        }
-                      },
-                    );
-                  },
-                )
-              ],
+            title: Container(
+              height: 70,
+              width: MediaQuery.of(context).size.width / 1.25,
+              margin: const EdgeInsets.all(1),
+              padding: const EdgeInsets.all(1),
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                color: Colors.blueGrey,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      height: 50,
+                      width: 70,
+                      margin: const EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(1),
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      child: const Text('أراجيز'),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      height: 50,
+                      width: 70,
+                      margin: const EdgeInsets.all(1),
+                      padding: const EdgeInsets.all(1),
+                      alignment: Alignment.centerRight,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: icn,
+                        onPressed: () {
+                          return setState(
+                            () {
+                              if (mix.themeMode == ThemeMode.dark) {
+                                mix.themeMode = ThemeMode.light;
+                                mix.themeData = ThemeData.light();
+                                icn = const Icon(Icons.dark_mode);
+                              } else {
+                                mix.themeMode = ThemeMode.dark;
+                                mix.themeData = ThemeData.dark();
+                                icn = const Icon(Icons.light_mode);
+                              }
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             centerTitle: true,
             bottom: const TabBar(
               tabs: [
                 Tab(
+                  icon: Icon(
+                    Icons.home,
+                    color: Colors.green,
+                  ),
                   text: 'Contests',
                 ),
                 Tab(
-                  text: 'Dashboard',
+                  icon: Icon(
+                    Icons.leaderboard,
+                    color: Colors.green,
+                  ),
+                  text: 'Leaderboard',
                 ),
                 Tab(
+                  icon: Icon(
+                    Icons.account_balance,
+                    color: Colors.green,
+                  ),
                   text: 'About',
                 ),
               ],
@@ -84,7 +142,7 @@ class _MainScreenOfApp extends State<MainScreenOfApp> {
           body: TabBarView(
             children: [
               const ContestsViewWidget(),
-              Dashboared(),
+              const Dashboared(),
               About(),
             ],
           ),

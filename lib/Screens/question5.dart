@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gsg_first_project/Screens/yourScore.dart';
 import 'package:gsg_first_project/dataSets/contestList.dart';
@@ -13,6 +15,46 @@ class Question5 extends StatefulWidget {
 }
 
 class _Question5 extends State<Question5> {
+  Timer? _timer;
+  int _start = 10;
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+          _group = Vals.none;
+          mix.qNum = 1;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => YourScreen(),
+            ),
+          );
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
   String s = mix.conName;
   int n = mix.conNum;
   List<Container> ls2 = [];
@@ -71,15 +113,25 @@ class _Question5 extends State<Question5> {
                       children: <Widget>[
                         Container(
                           width: MediaQuery.of(context).size.width / 1.25,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 3,
+                              color: Colors.blueGrey.shade800,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(30),
                             ),
                           ),
                           constraints: const BoxConstraints(
                             maxHeight: double.infinity,
                           ),
-                          child: Text('Q$numberOfQuestin : $qText'),
+                          child: Text(
+                            'Q$numberOfQuestin : $qText',
+                            overflow: TextOverflow.visible,
+                            style: const TextStyle(fontSize: 18),
+                          ),
                         ),
                         const Divider(
                           color: Colors.black,
@@ -92,6 +144,16 @@ class _Question5 extends State<Question5> {
                             onChanged: (Vals? value) {
                               setState(() {
                                 _group = value;
+                                if (_group == cc) {
+                                  mix.score += _start;
+                                }
+                                mix.qNum++;
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => YourScreen(),
+                                  ),
+                                );
                               });
                             },
                           ),
@@ -104,6 +166,16 @@ class _Question5 extends State<Question5> {
                             onChanged: (Vals? value) {
                               setState(() {
                                 _group = value;
+                                if (_group == cc) {
+                                  mix.score += _start;
+                                }
+                                mix.qNum = 1;
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => YourScreen(),
+                                  ),
+                                );
                               });
                             },
                           ),
@@ -116,6 +188,16 @@ class _Question5 extends State<Question5> {
                             onChanged: (Vals? value) {
                               setState(() {
                                 _group = value;
+                                if (_group == cc) {
+                                  mix.score += _start;
+                                }
+                                mix.qNum = 1;
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => YourScreen(),
+                                  ),
+                                );
                               });
                             },
                           ),
@@ -128,6 +210,16 @@ class _Question5 extends State<Question5> {
                             onChanged: (Vals? value) {
                               setState(() {
                                 _group = value;
+                                if (_group == cc) {
+                                  mix.score += _start;
+                                }
+                                mix.qNum = 1;
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => YourScreen(),
+                                  ),
+                                );
                               });
                             },
                           ),
@@ -143,7 +235,7 @@ class _Question5 extends State<Question5> {
                     foregroundColor: Colors.white,
                     onPressed: () {
                       if (_group == cc) {
-                        mix.score++;
+                        mix.score += _start;
                       }
                       mix.qNum = 1;
                       Navigator.pushReplacement(
@@ -154,6 +246,26 @@ class _Question5 extends State<Question5> {
                       );
                     },
                     child: const Text('Next'),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      if (_group == cc) {
+                        mix.score += _start;
+                      }
+                      mix.qNum++;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => YourScreen(),
+                        ),
+                      );
+                    },
+                    child: Text(_start.toString()),
                   ),
                 ),
                 // IconButton(

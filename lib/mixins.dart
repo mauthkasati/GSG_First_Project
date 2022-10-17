@@ -13,4 +13,5 @@ mixin mix {
   static String msg2 = '';
   static bool check = false;
   static int score = 0;
+  static String desc = '';
 }

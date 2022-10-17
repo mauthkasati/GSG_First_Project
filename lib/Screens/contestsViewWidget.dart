@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsg_first_project/Screens/readMore.dart';
 import 'package:gsg_first_project/mixins.dart';
 import 'package:gsg_first_project/dataSets/contestList.dart';
 import '../Screens/insideContest.dart';
@@ -18,7 +19,7 @@ class ContestsViewWidget extends StatelessWidget {
     for (var i = 0; i < contestList.length; i++) {
       int? contestID = contests[i].c_id;
       String? contestName = contests[i].contestName;
-      String? desc = contests[i].description;
+      mix.desc = contests[i].description!;
       ls1.add(
         Container(
           width: MediaQuery.of(context).size.width / 1.25,
@@ -26,8 +27,11 @@ class ContestsViewWidget extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(15),
           decoration: const BoxDecoration(
-              color: Colors.blueGrey,
-              borderRadius: BorderRadius.all(Radius.circular(30))),
+            color: Colors.blueGrey,
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -48,44 +52,8 @@ class ContestsViewWidget extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Theme(
-                                            data: mix.themeData,
-                                            child: Scaffold(
-                                              appBar: AppBar(
-                                                title: Text(
-                                                  contestName,
-                                                  style: const TextStyle(
-                                                      fontSize: 16),
-                                                ),
-                                              ),
-                                              body: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    1.25,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    3,
-                                                margin:
-                                                    const EdgeInsets.all(10),
-                                                padding:
-                                                    const EdgeInsets.all(15),
-                                                decoration: const BoxDecoration(
-                                                    color: Colors.blueGrey,
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                30))),
-                                                child: Text(
-                                                  desc!,
-                                                  overflow: TextOverflow.fade,
-                                                  style: const TextStyle(
-                                                      height: 3),
-                                                ),
-                                              ),
-                                            ),
-                                          )),
+                                    builder: (context) => ReadMore(),
+                                  ),
                                 ),
                               },
                           child: const Icon(Icons.auto_stories)),

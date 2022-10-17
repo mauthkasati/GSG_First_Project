@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gsg_first_project/Screens/question2.dart';
 import 'package:gsg_first_project/dataSets/contestList.dart';
@@ -13,6 +15,46 @@ class InsideContest extends StatefulWidget {
 }
 
 class _InsideContestState extends State<InsideContest> {
+  Timer? _timer;
+  int _start = 10;
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+          _group = Vals.none;
+          mix.qNum++;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Question2(),
+            ),
+          );
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
   String s = mix.conName;
   int n = mix.conNum;
   List<Container> ls2 = [];
@@ -30,6 +72,7 @@ class _InsideContestState extends State<InsideContest> {
       contestList[mix.conNum - 1]['questions'][mix.qNum - 1]['choice4'];
   Vals cc =
       contestList[mix.conNum - 1]['questions'][mix.qNum - 1]['correctChoice'];
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -73,15 +116,25 @@ class _InsideContestState extends State<InsideContest> {
                         children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width / 1.25,
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.all(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 3,
+                                color: Colors.blueGrey.shade800,
+                                style: BorderStyle.solid,
+                              ),
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(30),
                               ),
                             ),
                             constraints: const BoxConstraints(
                               maxHeight: double.infinity,
                             ),
-                            child: Text('Q$numberOfQuestin : $qText'),
+                            child: Text(
+                              'Q$numberOfQuestin : $qText',
+                              overflow: TextOverflow.visible,
+                              style: const TextStyle(fontSize: 18),
+                            ),
                           ),
                           const Divider(
                             color: Colors.black,
@@ -94,6 +147,16 @@ class _InsideContestState extends State<InsideContest> {
                               onChanged: (Vals? value) {
                                 setState(() {
                                   _group = value;
+                                  if (_group == cc) {
+                                    mix.score += _start;
+                                  }
+                                  mix.qNum++;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Question2(),
+                                    ),
+                                  );
                                 });
                               },
                             ),
@@ -106,6 +169,16 @@ class _InsideContestState extends State<InsideContest> {
                               onChanged: (Vals? value) {
                                 setState(() {
                                   _group = value;
+                                  if (_group == cc) {
+                                    mix.score += _start;
+                                  }
+                                  mix.qNum++;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Question2(),
+                                    ),
+                                  );
                                 });
                               },
                             ),
@@ -118,6 +191,16 @@ class _InsideContestState extends State<InsideContest> {
                               onChanged: (Vals? value) {
                                 setState(() {
                                   _group = value;
+                                  if (_group == cc) {
+                                    mix.score += _start;
+                                  }
+                                  mix.qNum++;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Question2(),
+                                    ),
+                                  );
                                 });
                               },
                             ),
@@ -130,6 +213,16 @@ class _InsideContestState extends State<InsideContest> {
                               onChanged: (Vals? value) {
                                 setState(() {
                                   _group = value;
+                                  if (_group == cc) {
+                                    mix.score += _start;
+                                  }
+                                  mix.qNum++;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Question2(),
+                                    ),
+                                  );
                                 });
                               },
                             ),
@@ -146,7 +239,7 @@ class _InsideContestState extends State<InsideContest> {
                     foregroundColor: Colors.white,
                     onPressed: () {
                       if (_group == cc) {
-                        mix.score++;
+                        mix.score += _start;
                       }
                       mix.qNum++;
                       Navigator.pushReplacement(
@@ -157,6 +250,26 @@ class _InsideContestState extends State<InsideContest> {
                       );
                     },
                     child: const Text('Next'),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                    onPressed: () {
+                      if (_group == cc) {
+                        mix.score += _start;
+                      }
+                      mix.qNum++;
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Question2(),
+                        ),
+                      );
+                    },
+                    child: Text(_start.toString()),
                   ),
                 ),
                 // IconButton(
